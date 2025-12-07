@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Recipe Finder - البحث الذكي عن الوصفات</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- الهيدر المحسن -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Build Your Meal</a>
+                <nav>
+                    <ul style="list-style: none; display: flex; gap: 30px; margin: 0; padding: 0;">
+                        <li><a href="#" style="color: var(--text-primary); text-decoration: none; font-weight: 600; transition: var(--transition-fast);">الرئيسية</a></li>
+                            <button id="darkModeToggle" class="dark-mode-toggle" onclick="toggleDarkMode()">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم البحث المحسن -->
+    <section class="search-section">
+        <div class="container">
+            <h1 class="search-title">اكتشف أشهى الوصفات بالبحث الذكي</h1>
+            <p class="search-subtitle">ابحث عن وصفات لذيذة من جميع أنحاء العالم باستخدام أي مكون</p>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="ابحث عن مكون (مثل: طماطم، بطاطس، دجاج...)">
+                <button id="search-btn" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <!-- أزرار البحث السريع -->
+            <div class="quick-search-buttons">
+                <button class="quick-search-btn" onclick="performSearch('chicken')">
+                    <i class="fas fa-drumstick-bite"></i> دجاج
+                </button>
+                <button class="quick-search-btn" onclick="performSearch('beef')">
+                    <i class="fas fa-hamburger"></i> لحم
+                </button>
+                <button class="quick-search-btn" onclick="performSearch('rice')">
+                    <i class="fas fa-seedling"></i> أرز
+                </button>
+                <button class="quick-search-btn" onclick="performSearch('pasta')">
+                    <i class="fas fa-utensils"></i> معكرونة
+                </button>
+                <button class="quick-search-btn" onclick="performSearch('tomato')">
+                    <i class="fas fa-apple-alt"></i> طماطم
+                </button>
+                <button class="quick-search-btn" onclick="performSearch('potato')">
+                    <i class="fas fa-seedling"></i> بطاطس
+                </button>
+                <button class="quick-search-btn" onclick="showRandomRecipes()">
+                    <i class="fas fa-random"></i> عشوائي
+                </button>
+                <button class="quick-search-btn" onclick="searchVegetarian()">
+                    <i class="fas fa-leaf"></i> نباتي
+                </button>
+                <button class="quick-search-btn" onclick="searchDesserts()">
+                    <i class="fas fa-birthday-cake"></i> حلويات
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- عرض نتائج البحث -->
+    <section style="padding: 3rem 0;">
+        <div class="container">
+            <div id="search-results"></div>
+            <div id="recipes-container" class="cards-container"></div>
+        </div>
+    </section>
+
+    <!-- مؤشر التحميل -->
+    <div id="loading-indicator" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>جاري البحث عن الوصفات...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-secondary); padding: 2rem 0; text-align: center; margin-top: 4rem;">
+        <div class="container">
+            <p style="color: var(--text-secondary); margin: 0;">
+                © 2024 Smart Recipe Finder - جميع الحقوق محفوظة
+            </p>
+        </div>
+    </footer>
+
+    <script src="recipes.js"></script>
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            const icon = document.querySelector('#darkModeToggle i');
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Load dark mode preference
+        function loadDarkModePreference() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#darkModeToggle i');
+                if (icon) icon.className = 'fas fa-sun';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDarkModePreference();
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1226 @@
+/* ===== متغيرات CSS الأساسية ===== */
+:root {
+    /* الألوان الأساسية */
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #f093fb;
+    --success-color: #4ade80;
+    --warning-color: #fbbf24;
+    --error-color: #f87171;
+    --info-color: #60a5fa;
+    
+    /* ألوان النص والخلفية */
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-light: #9ca3af;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-card: #ffffff;
+    
+    /* التدرجات */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    --gradient-success: linear-gradient(135deg, #10b981, #059669);
+    --gradient-card: linear-gradient(145deg, #ffffff, #f8fafc);
+    
+    /* الظلال */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.3);
+    
+    /* الانتقالات */
+    --transition-fast: all 0.2s ease;
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* المسافات */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* نصف القطر */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+}
+
+/* ===== الوضع الليلي ===== */
+.dark-mode {
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-card: #374151;
+    --gradient-card: linear-gradient(145deg, #374151, #4b5563);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== إعادة تعيين الأساسيات ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: var(--transition-normal);
+    overflow-x: hidden;
+}
+
+/* ===== الحاوي الأساسي ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ===== الهيدر ===== */
+header {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+ 
+    transition: var(--transition-normal);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg) 0;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: var(--transition-fast);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* ===== زر الوضع الليلي ===== */
+.dark-mode-toggle {
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-full);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-md);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ===== قسم البحث ===== */
+.search-section {
+    background: rgb(95, 95, 196);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-image: url("imge/1.jpeg");
+
+}
+
+.search-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    /* background-image: url(imge/1.jpeg); */
+    
+    
+}
+
+.search-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease;
+}
+
+.search-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--spacing-2xl);
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* ===== حاوي البحث ===== */
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto var(--spacing-xl);
+    animation: fadeInUp 0.8s ease 0.4s both;
+    background-image: url("");
+}
+
+.search-container input {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) 60px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-xl);
+    transition: var(--transition-fast);
+    outline: none;
+}
+
+.search-container input:focus {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl), 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+/* ===== قائمة الاقتراح التلقائي ===== */
+.autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    margin-top: var(--spacing-sm);
+    z-index: 1000;
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+}
+
+.autocomplete-item {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.autocomplete-item:hover {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translateX(5px);
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== أزرار البحث السريع ===== */
+.quick-search-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+.quick-search-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.quick-search-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.quick-search-btn i {
+    margin-left: var(--spacing-sm);
+}
+
+/* ===== أزرار التصفية ===== */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.8s both;
+}
+
+.filter-btn {
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    color: var(--text-primary);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.filter-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.filter-btn i {
+    margin-left: var(--spacing-sm);
+}
+
+/* ===== شبكة البطاقات ===== */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+}
+
+/* ===== بطاقة الوصفة ===== */
+.recipe-card {
+    background: var(--gradient-card);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-normal);
+    position: relative;
+    animation: fadeInUp 0.6s ease both;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.recipe-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: var(--transition-normal);
+}
+
+.recipe-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* ===== صورة الوصفة ===== */
+.recipe-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.recipe-card:hover .recipe-image img {
+    transform: scale(1.1);
+}
+
+.recipe-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.recipe-card:hover .recipe-overlay {
+    opacity: 1;
+}
+
+.view-recipe-btn {
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    transform: translateY(20px);
+}
+
+.recipe-card:hover .view-recipe-btn {
+    transform: translateY(0);
+}
+
+.view-recipe-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ===== محتوى البطاقة ===== */
+.recipe-content {
+    padding: var(--spacing-xl);
+}
+
+.recipe-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.recipe-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.recipe-meta span {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    background: var(--bg-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-full);
+}
+
+.recipe-ingredients h4 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.recipe-ingredients ul {
+    list-style: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.recipe-ingredients li {
+    padding: var(--spacing-sm) 0;
+    color: var(--text-secondary);
+    position: relative;
+    padding-right: var(--spacing-lg);
+}
+
+.recipe-ingredients li::before {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+}
+
+.more-ingredients {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ===== أزرار الإجراءات ===== */
+.recipe-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.action-btn {
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
+    color: var(--text-primary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.share-btn:hover {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.youtube-btn:hover {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+}
+
+/* ===== وصفة مفاجأة اليوم ===== */
+.surprise-recipe {
+    position: relative;
+    border: 3px solid #ffd700;
+    box-shadow: var(--shadow-xl), 0 0 30px rgba(255, 215, 0, 0.4);
+    animation: surpriseGlow 2s ease-in-out infinite alternate;
+}
+
+.surprise-badge {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: var(--shadow-lg);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+/* ===== إشعارات البحث ===== */
+.search-notification {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    font-weight: 600;
+    animation: slideInDown 0.5s ease;
+}
+
+.search-notification.success {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border: 2px solid #10b981;
+}
+
+.search-notification.error {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    border: 2px solid #ef4444;
+}
+
+.search-notification i {
+    margin-left: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+/* ===== الإشعارات العامة ===== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: 10000;
+    transform: translateX(400px);
+    transition: var(--transition-normal);
+    border-left: 4px solid var(--info-color);
+    max-width: 400px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    border-left-color: var(--success-color);
+}
+
+.notification-error {
+    border-left-color: var(--error-color);
+}
+
+.notification-info {
+    border-left-color: var(--info-color);
+}
+
+.notification i {
+    margin-left: var(--spacing-sm);
+}
+
+/* ===== مؤشر التحميل ===== */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(102, 126, 234, 0.3);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: var(--spacing-lg);
+}
+
+.loading p {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ===== رسالة عدم وجود نتائج ===== */
+.no-results {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--text-secondary);
+}
+
+.no-results i {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-light);
+}
+
+.no-results h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+/* ===== الرسوم المتحركة ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes surpriseGlow {
+    from {
+        box-shadow: var(--shadow-xl), 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+    to {
+        box-shadow: var(--shadow-xl), 0 0 50px rgba(255, 215, 0, 0.8);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===== التصميم المتجاوب ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .search-title {
+        font-size: 2rem;
+    }
+    
+    .search-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .quick-search-buttons,
+    .filter-buttons {
+        gap: var(--spacing-sm);
+    }
+    
+    .quick-search-btn,
+    .filter-btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+    
+    nav ul {
+        gap: var(--spacing-lg);
+    }
+    
+    .notification {
+        right: var(--spacing-md);
+        left: var(--spacing-md);
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container input {
+        padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 50px;
+        font-size: 1rem;
+    }
+    
+    .recipe-content {
+        padding: var(--spacing-lg);
+    }
+    
+    .recipe-title {
+        font-size: 1.25rem;
+    }
+    
+    .recipe-meta {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .recipe-actions {
+        flex-direction: column;
+    }
+}
+
+/* ===== تحسينات إضافية ===== */
+.recipe-card:nth-child(even) {
+    animation-delay: 0.1s;
+}
+
+.recipe-card:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+.recipe-card:hover .recipe-title {
+    color: var(--primary-color);
+    transition: var(--transition-fast);
+}
+
+.search-container input::placeholder {
+    color: var(--text-light);
+}
+
+/* تحسين الأداء */
+.recipe-image img {
+    will-change: transform;
+}
+
+.recipe-card {
+    will-change: transform;
+}
+
+/* إضافة تأثيرات للتفاعل */
+.quick-search-btn:active,
+.filter-btn:active,
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+/* تحسين إمكانية الوصول */
+.recipe-card:focus-within {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* تأثيرات إضافية للتحميل */
+.recipe-card.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.recipe-card.loaded {
+    animation: fadeInUp 0.6s ease both;
+}
+
+
+
+/* ===== تحسينات للبحث الذكي ===== */
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 1rem 4rem 1rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    font-size: 1.1rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-md);
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+.search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== أزرار البحث السريع ===== */
+.quick-search-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.quick-search-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quick-search-btn:hover {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== بطاقات الوصفات المحسنة ===== */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.recipe-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    cursor: pointer;
+    position: relative;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.recipe-image {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+}
+
+.recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.recipe-card:hover .recipe-image img {
+    transform: scale(1.1);
+}
+
+.recipe-info {
+    padding: 1.5rem;
+}
+
+.recipe-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.recipe-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.recipe-country, .recipe-type {
+    padding: 0.25rem 0.75rem;
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.recipe-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.ingredient-count, .cooking-time {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.details-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.details-btn:hover {
+    background: var(--gradient-accent);
+    transform: translateY(-2px);
+}
+
+/* ===== مؤشر التحميل ===== */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--bg-secondary);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== رسائل الإشعارات ===== */
+.suggestion-title {
+    text-align: center;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* ===== الوضع الليلي ===== */
+.dark-mode {
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-card: #374151;
+}
+
+.dark-mode-toggle {
+    background: var(--bg-secondary);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* ===== الأنيميشن ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* ===== الاستجابة للشاشات الصغيرة ===== */
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+    
+    .quick-search-buttons {
+        gap: 0.5rem;
+    }
+    
+    .quick-search-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .search-container input {
+        padding: 0.875rem 3.5rem 0.875rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .search-btn {
+        width: 40px;
+        height: 40px;
+        right: 6px;
+    }
+    
+    .recipe-title {
+        font-size: 1.2rem;
+    }
+    
+    .recipe-meta {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quick-search-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .quick-search-btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+}
+

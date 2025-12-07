@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الوصفة - Smart Recipe Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Build Your Meal</a>
+                <nav>
+                    <ul style="list-style: none; display: flex; gap: 30px; margin: 0; padding: 0;">
+                        <li><a href="index.html" style="color: var(--text-primary); text-decoration: none; font-weight: 600; transition: var(--transition-fast);">الرئيسية</a></li>
+                        <li>
+                            <button id="darkModeToggle" class="dark-mode-toggle" onclick="toggleDarkMode()">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوى تفاصيل الوصفة -->
+    <div class="container">
+        <div class="recipe-detail-container">
+            <!-- صورة الوصفة والمعلومات الأساسية -->
+            <div class="recipe-header">
+                <div class="recipe-image-container">
+                    <img id="recipe-image" src="" alt="" class="recipe-detail-image">
+                </div>
+                <div class="recipe-basic-info">
+                    <h1 id="recipe-title" class="recipe-detail-title"></h1>
+                    <div class="recipe-meta-info">
+                        <span class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="recipe-country"></span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-utensils"></i>
+                            <span id="recipe-type"></span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="cooking-time"></span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <span id="ingredient-count"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="recipe-content-grid">
+                <!-- قائمة المكونات -->
+                <div class="ingredients-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-list"></i>
+                        المكونات المطلوبة
+                    </h2>
+                    <ul id="ingredients-list" class="ingredients-list"></ul>
+                    
+                    <div class="chef-tip">
+                        <h4><i class="fas fa-lightbulb"></i> نصيحة الشيف</h4>
+                        <p>تأكد من توفر جميع المكونات قبل البدء في الطبخ للحصول على أفضل النتائج</p>
+                    </div>
+                </div>
+
+                <!-- طريقة التحضير -->
+                <div class="instructions-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-clipboard-list"></i>
+                        طريقة التحضير
+                    </h2>
+                    <div id="instructions" class="instructions-content"></div>
+                </div>
+            </div>
+
+            <!-- أزرار الإجراءات -->
+            <div class="action-buttons">
+                <button onclick="window.history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i> العودة
+                </button>
+                <a id="youtube-link" href="#" target="_blank" class="btn btn-youtube" style="display: none;">
+                    <i class="fab fa-youtube"></i> مشاهدة على اليوتيوب
+                </a>
+                <button onclick="shareRecipe()" class="btn btn-primary">
+                    <i class="fas fa-share"></i> مشاركة
+                </button>
+                <button onclick="printRecipe()" class="btn btn-secondary">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
+            </div>
+
+            <!-- معلومات إضافية -->
+            <div class="additional-info">
+                <h3><i class="fas fa-info-circle"></i> معلومات مفيدة</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>مناسبة لـ 4-6 أشخاص</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>يمكن تعديل الكميات حسب الحاجة</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-heart"></i>
+                        <span>وصفة محبوبة عالمياً</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-secondary); padding: 2rem 0; text-align: center; margin-top: 4rem;">
+        <div class="container">
+            <p style="color: var(--text-secondary); margin: 0;">
+                © 2024 Smart Recipe Finder - جميع الحقوق محفوظة
+            </p>
+        </div>
+    </footer>
+
+    <script src="recipes.js"></script>
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            const icon = document.querySelector('#darkModeToggle i');
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Load dark mode preference
+        function loadDarkModePreference() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#darkModeToggle i');
+                if (icon) icon.className = 'fas fa-sun';
+            }
+        }
+
+        // Share recipe functionality
+        function shareRecipe() {
+            const recipe = JSON.parse(localStorage.getItem('selectedRecipe'));
+            if (!recipe) return;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: recipe.name,
+                    text: `تحقق من هذه الوصفة الرائعة: ${recipe.name}`,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('تم نسخ رابط الوصفة!', 'success');
+                }).catch(() => {
+                    showNotification('لا يمكن نسخ الرابط', 'error');
+                });
+            }
+        }
+
+        // Print recipe functionality
+        function printRecipe() {
+            window.print();
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+                max-width: 300px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDarkModePreference();
+        });
+    </script>
+
+    <style>
+        .recipe-detail-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .recipe-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .recipe-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recipe-detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-detail-image:hover {
+            transform: scale(1.05);
+        }
+
+        .recipe-basic-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .recipe-detail-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .recipe-meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .recipe-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ingredients-section, .instructions-section {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .ingredients-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ingredients-list li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.2s ease;
+        }
+
+        .ingredients-list li:hover {
+            transform: translateX(-5px);
+        }
+
+        .chef-tip {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #e3f2fd, #f3e5f5);
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .chef-tip h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instructions-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-youtube {
+            background: #ff0000;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .additional-info {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .additional-info h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .recipe-header {
+                grid-template-columns: 1fr;
+            }
+            
+            .recipe-content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .recipe-detail-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media print {
+            header, .action-buttons, footer {
+                display: none !important;
+            }
+            
+            .recipe-detail-container {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
+
